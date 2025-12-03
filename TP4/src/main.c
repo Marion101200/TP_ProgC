@@ -1,44 +1,31 @@
+#include "liste.h"
 #include <stdio.h>
-#include <string.h>
-#include "fichier.h"
 
 int main() {
-    int choix;
-    char nom_de_fichier[100];
-    char message[1000];
+    struct liste_couleurs ma_liste;
+    init_liste(&ma_liste);
 
-    while (1) {
-        printf("\nQue souhaitez-vous faire ?\n");
-        printf("1. Lire un fichier\n");
-        printf("2. Écrire dans un fichier\n");
-        printf("3. Quitter\n");
-        printf("Votre choix : ");
-        scanf("%d", &choix);
-        getchar(); // consommer le retour à la ligne
+    // Exemple de 10 couleurs
+    struct couleur couleurs[10] = {
+        {0xFF, 0x00, 0x00, 0xFF}, // Rouge
+        {0x00, 0xFF, 0x00, 0xFF}, // Vert
+        {0x00, 0x00, 0xFF, 0xFF}, // Bleu
+        {0xFF, 0xFF, 0x00, 0xFF}, // Jaune
+        {0xFF, 0x00, 0xFF, 0xFF}, // Magenta
+        {0x00, 0xFF, 0xFF, 0xFF}, // Cyan
+        {0x80, 0x80, 0x80, 0xFF}, // Gris
+        {0xFF, 0xA5, 0x00, 0xFF}, // Orange
+        {0xA5, 0x2A, 0x2A, 0xFF}, // Marron
+        {0xFF, 0xC0, 0xCB, 0xFF}  // Rose
+    };
 
-        if (choix == 1) {
-            printf("Entrez le nom du fichier à lire : ");
-            fgets(nom_de_fichier, sizeof(nom_de_fichier), stdin);
-            nom_de_fichier[strcspn(nom_de_fichier, "\n")] = '\0'; // enlever le \n
-            lire_fichier(nom_de_fichier);
-        } else if (choix == 2) {
-            printf("Entrez le nom du fichier dans lequel vous souhaitez écrire : ");
-            fgets(nom_de_fichier, sizeof(nom_de_fichier), stdin);
-            nom_de_fichier[strcspn(nom_de_fichier, "\n")] = '\0';
-
-            printf("Entrez le message à écrire : ");
-            fgets(message, sizeof(message), stdin);
-            message[strcspn(message, "\n")] = '\0';
-
-            ecrire_dans_fichier(nom_de_fichier, message);
-        } else if (choix == 3) {
-            printf("Au revoir !\n");
-            break;
-        } else {
-            printf("Choix invalide. Veuillez réessayer.\n");
-        }
+    // Ajout des couleurs à la liste
+    for (int i = 0; i < 10; i++) {
+        insertion(&couleurs[i], &ma_liste);
     }
+
+    printf("Liste des couleurs :\n");
+    parcours(&ma_liste);
 
     return 0;
 }
-
